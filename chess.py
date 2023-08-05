@@ -158,8 +158,163 @@ def rook_move(board, position):
             break
     return moves
     
+#bishop_move appears to work
+def bishop_move(board, position):
+        
+    r=position[0]
+    c=position[1]
+    moves=[]
+    if board[r][c]=="b" or board[r][c]=="q":
+        color="black"
+    elif board[r][c]=="B" or board[r][c]=="Q":
+        color="white"
+    else:
+        return
+    
+    test_row=r-1
+    test_col=c-1
+    while test_row>=0:
+        test_loc=test_position(test_row,test_col,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[test_row][test_col]!=" ":
+                break;
+            test_row-=1
+            test_col-=1
+        else:
+            break
+    test_row=r-1
+    test_col=c+1
+    while test_row<8:
+        test_loc=test_position(test_row,test_col,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[test_row][test_col]!=" ":
+                break;
+            test_row-=1
+            test_col+=1
+        else: break
+    test_row=r+1
+    test_col=c-1
+    while test_col>=0:
+        test_loc=test_position(test_row,test_col,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[test_row][test_col]!=" ":
+                break;
+            test_col-=1
+            test_row+=1
+        else: break
+    test_col=c+1
+    test_row=r+1
+    while test_col<8:
+        test_loc=test_position(test_row,test_col,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[test_row][test_col]!=" ":
+                break;
+            test_col+=1
+            test_row+=1
+        else:
+            break
+    return moves
 
+#queen_move appears to work
+def queen_move(board,position):
+    
+    if board[position[0]][position[1]]=="q" or board[position[0]][position[1]]=="Q":
+        moves=rook_move(board,position)+bishop_move(board,position)
+        return moves
+    else: return
+
+#king_move appears to work
+def king_move(board, position):
+    
+
+    r=position[0]
+    c=position[1]
+    moves=[]
+    if board[r][c]=="k":
+        color="black"
+    elif board[r][c]=="K": 
+        color="white"
+    else:
+        return
+    
+    test_row=r-1
+    test_col=c-1
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_col=c
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_col=c+1
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_row=r
+    test_col=c-1
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_col=c+1
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_row=r+1
+    test_col=c-1
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_col=c
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    test_col=c+1
+    test_loc=test_position(test_row,test_col,color,board)
+    if test_loc:
+        moves.append(test_loc)
+    return moves
+
+#pawn_move appears to work, but en_passant is not yet implemented 
+# and 8th rank promotion is not yet implemented
+
+def pawn_move(board, position):
+    
+    r=position[0]
+    c=position[1]
+    moves=[]
+    if board[r][c]=="p":
+        color="black"
+        if r<7 and board[r+1][c]==" ":
+            moves.append((r+1,c))
+            if r==1 and board[3][c]==" ":
+                moves.append((3,c))
+        if r<7:
+            if c<7 and is_white(board[r+1][c+1]):
+                moves.append((r+1,c+1))
+            if c>0 and is_white(board[r+1][c-1]):
+                moves.append((r+1,c-1))
+        return moves 
+    elif board[r][c]=="P": 
+        color="white"
+        if r>1 and board[r-1][c]==" ":
+            moves.append((r-1,c))
+            if r==6 and board[4][c]==" ":
+                moves.append((4,c))
+        if r>0:
+            if c<7 and is_black(board[r-1][c+1]):
+                moves.append((r-1,c+1))
+            if c>0 and is_black(board[r-1][c-1]):
+                moves.append((r-1,c-1))
+        return moves 
+    else:
+        return
+    return
+        
 
 #main loop
-test = rook_move(start_board,(0,0))
+test = pawn_move(start_board,(6,3))
 print (test)
