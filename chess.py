@@ -1,6 +1,7 @@
 from collections import Counter
 import numpy as np
 import copy
+import chessutil
 
 
 start_board=[
@@ -402,10 +403,6 @@ def decode_board(boardcode):
 #progresses.
 
 def hashcode(board):
-    
-    # Python3 code to demonstrate
-# Matrix elements Frequencies Counter
-
     res=dict()
     a=[]
     for i in board:
@@ -446,7 +443,7 @@ def black_moves(board):
                         moves=king_move(board, (r,c))
                 if len(moves)>0:
                     for i in moves:
-                        result.append((i,make_move(board,r,c,i[0],i[1])))
+                        result.append((board,make_move(board,r,c,i[0],i[1])))
     return result
 
 def white_moves(board):
@@ -469,8 +466,10 @@ def white_moves(board):
                         moves=king_move(board, (r,c))
                 if len(moves)>0:
                     for i in moves:
-                        result.append((i,make_move(board,r,c,i[0],i[1])))
+                        result.append((board,make_move(board,r,c,i[0],i[1])))
     return result
+
+
 
 #main loop
 print(white_moves(start_board))
