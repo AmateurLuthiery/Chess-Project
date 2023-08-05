@@ -104,7 +104,7 @@ def knight_move(board, position):
         moves.append(test_loc)
     return moves
 
-#rook_move is under construction
+#rook_move appears to work
 def rook_move(board, position):
         
     r=position[0]
@@ -117,10 +117,49 @@ def rook_move(board, position):
     else:
         return
     
-    test_loc = test_position(r-2,c-1,color)
-    if test_loc:
-        moves.append(test_loc)
+    test_row=r-1
+    while test_row>=0:
+        test_loc=test_position(test_row,c,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[test_row][c]!=" ":
+                break;
+            test_row-=1
+        else:
+            break
+    test_row=r+1
+    while test_row<8:
+        test_loc=test_position(test_row,c,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[test_row][c]!=" ":
+                break;
+            test_row+=1
+        else: break
+    test_col=c-1
+    while test_col>=0:
+        test_loc=test_position(r,test_col,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[r][test_col]!=" ":
+                break;
+            test_col-=1
+            
+        else: break
+    test_col=c+1
+    while test_col<8:
+        test_loc=test_position(r,test_col,color,board)
+        if test_loc:
+            moves.append(test_loc)
+            if board[r][test_col]!=" ":
+                break;
+            test_col+=1
+        else:
+            break
+    return moves
+    
 
 
-test = knight_move(start_board,(7,6))
+#main loop
+test = rook_move(start_board,(0,0))
 print (test)
