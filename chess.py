@@ -13,6 +13,11 @@ start_board=[
     ["P","P","P","P","P","P","P","P"],
     ["R","N","B","Q","K","B","N","R"]]
 
+maxMove=5
+
+visitedBoards=dict()
+movesMade=list()
+
 '''Functions needed:
 knight_move:  takes as arguments a board and a position on the board (r,c) 
 and returns a list of (r,c) moves the knight could move to.  The moves must all
@@ -479,10 +484,72 @@ def shah_Mort(board,color):
     elif color=="white" and hashcode(board).get("K"):
         return False
     return True
-    
+
+current_board=start_board
+whiteTurn=True
+moves=0
+
 #main loop
 
-current_state=State(encode_board(start_board)[0])
+while moves<maxMove:
+    current_state=encode_board(current_board)[0]
+    visited=visitedBoards.get(current_state)
+    if whiteTurn:
+        if visited:
+            if not visited.get("whiteMoves"):
+                encoded_moves=[encode_board(item[1])[0] for item in white_moves(current_board)]
+                visitedBoards.update({current_state : {
+                    "whiteMoves": encoded_moves
+                }})
+            else:
+                raise NotImplemented
+        else:
+            encoded_moves=[encode_board(item[1])[0] for item in white_moves(current_board)]
+            visitedBoards.update({current_state:{
+                "whiteMoves": encoded_moves
+            }})
+    else:
+        if visited:
+            if not visited.get("blackMoves"):
+                encoded_moves=[encode_board(item[1])[0] for item in black_moves(current_board)]
+                visitedBoards.update({current_state : {
+                    "blackMoves": encoded_moves
+                }})
+            else:
+                raise NotImplemented
+        else:
+            encoded_moves=[encode_board(item[1])[0] for item in black_moves(current_board)]
+            visitedBoards.update({current_state:{
+                "blackMoves": encoded_moves
+            }})
+    whiteTurn=not whiteTurn
+        
 
 
-print(bone)
+
+
+
+
+
+
+
+
+
+#################################ignore below here
+'''
+
+frontier=QueueFrontier()
+moves=0
+while moves<5:
+    moves+=1
+    if whiteTurn:
+        nextMoves=white_moves(current_board)
+    else:
+        nextMoves=black_moves(current_board)
+    for item in nextMoves:
+        frontier.add((current_state,encode_board(item[1])[0]))
+    whiteTurn=not whiteTurn
+    
+
+print(frontier)
+'''
