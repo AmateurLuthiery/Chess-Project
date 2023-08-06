@@ -3,7 +3,6 @@ import numpy as np
 import copy
 from chessutil import *
 
-
 start_board=[
     ["r","n","b","q","k","b","n","r"],
     ["p","p","p","p","p","p","p","p"],
@@ -481,22 +480,9 @@ def shah_Mort(board,color):
         return False
     return True
     
-
 #main loop
 
-print(shah_Mort(start_board,"black"))
-print(shah_Mort(start_board,"white"))
-start_board[0][4]=" "
-print(shah_Mort(start_board,"black"))
-print(shah_Mort(start_board,"white"))
-start_board[7][4]=" "
-print(shah_Mort(start_board,"black"))
-print(shah_Mort(start_board,"white"))
-start_board[0][4]="k"
-print(shah_Mort(start_board,"black"))
-print(shah_Mort(start_board,"white"))
-start_board[7][4]="K"
-print(shah_Mort(start_board,"black"))
-print(shah_Mort(start_board,"white"))
+current_state=State(encode_board(start_board)[0])
 
-print(temp_state)
+
+print(bone)

@@ -19,4 +19,5 @@ class State():
     def addBlackState(self,nextBlackState,nextStateValue):
         self.nextBlackState.append((nextBlackState,nextStateValue))
         
-        
+    def addWhiteState(self,nextWhiteState,nextStateValue):
+        self.nextWhiteState.append((nextWhiteState,nextStateValue))
