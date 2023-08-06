@@ -1,7 +1,7 @@
 from collections import Counter
 import numpy as np
 import copy
-import chessutil
+from chessutil import *
 
 
 start_board=[
@@ -469,7 +469,34 @@ def white_moves(board):
                         result.append((board,make_move(board,r,c,i[0],i[1])))
     return result
 
-
+#shah_Mort checks if the given color has a king left on the board
+#if not, the king is dead, and it returns True
+#else it returns False
+#While technically the game of chess ends the turn before the king is dead
+# it is easier to implement with the king being actually dead
+def shah_Mort(board,color):
+    if color=="black" and hashcode(board).get("k"):
+        return False
+    elif color=="white" and hashcode(board).get("K"):
+        return False
+    return True
+    
 
 #main loop
-print(white_moves(start_board))
+
+print(shah_Mort(start_board,"black"))
+print(shah_Mort(start_board,"white"))
+start_board[0][4]=" "
+print(shah_Mort(start_board,"black"))
+print(shah_Mort(start_board,"white"))
+start_board[7][4]=" "
+print(shah_Mort(start_board,"black"))
+print(shah_Mort(start_board,"white"))
+start_board[0][4]="k"
+print(shah_Mort(start_board,"black"))
+print(shah_Mort(start_board,"white"))
+start_board[7][4]="K"
+print(shah_Mort(start_board,"black"))
+print(shah_Mort(start_board,"white"))
+
+print(temp_state)
