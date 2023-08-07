@@ -13,7 +13,7 @@ start_board=[
     ["P","P","P","P","P","P","P","P"],
     ["R","N","B","Q","K","B","N","R"]]
 
-maxMove=5
+maxMove=10
 
 visitedBoards=dict()
 movesMade=list()
@@ -485,12 +485,48 @@ def shah_Mort(board,color):
         return False
     return True
 
-current_board=start_board
+
+
+#current_board=start_board
 whiteTurn=True
 moves=0
-frontier=QueueFrontier();
+toVisitWhite=[]
+toVisitBlack=[]
+toVisitWhite.append(start_board)
+visitedWhite=dict()
+visitedBlack=dict()
 #main loop
 
+while moves < maxMove:
+    if whiteTurn:
+        while (len(toVisitWhite)>0):
+            current_board=toVisitWhite[0]
+            encode_current=encode_board(current_board)[1]
+            toVisitWhite=toVisitWhite[1:]
+            if not visitedWhite.get(encode_current):
+                nextMoves=white_moves(current_board)
+                dictEntry=[]
+                for item in nextMoves:
+                    toVisitBlack.append(item[1])
+                    dictEntry.append((encode_board(item[1]),None))
+                visitedWhite[encode_current]=dictEntry
+    else:
+        while (len(toVisitBlack)>0):
+            current_board=toVisitBlack[0]
+            encode_current=encode_board(current_board)[1]
+            toVisitBlack=toVisitBlack[1:]
+            if not visitedBlack.get(encode_current):
+                nextMoves=black_moves(current_board)
+                dictEntry=[]
+                for item in nextMoves:
+                    toVisitWhite.append(item[1])
+                    dictEntry.append((encode_board(item[1]),None))
+                visitedBlack[encode_current]=dictEntry
+    whiteTurn=not whiteTurn
+    moves+=1
+print("Done")
+
+'''
 while moves<maxMove:
     current_state=encode_board(current_board)[0]
     visited=visitedBoards.get(current_state)
@@ -538,7 +574,7 @@ while moves<maxMove:
 
 
 
-
+'''
 #################################ignore below here
 '''
 
