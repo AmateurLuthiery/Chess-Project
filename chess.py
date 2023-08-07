@@ -488,41 +488,45 @@ def shah_Mort(board,color):
 current_board=start_board
 whiteTurn=True
 moves=0
-
+frontier=QueueFrontier();
 #main loop
 
 while moves<maxMove:
     current_state=encode_board(current_board)[0]
     visited=visitedBoards.get(current_state)
     if whiteTurn:
+        nextMoves=white_moves(current_board)
         if visited:
             if not visited.get("whiteMoves"):
-                encoded_moves=[encode_board(item[1])[0] for item in white_moves(current_board)]
+                encoded_moves=[encode_board(item[1])[0] for item in nextMoves]
                 visitedBoards.update({current_state : {
                     "whiteMoves": encoded_moves
                 }})
             else:
                 raise NotImplemented
         else:
-            encoded_moves=[encode_board(item[1])[0] for item in white_moves(current_board)]
+            encoded_moves=[encode_board(item[1])[0] for item in nextMoves]
             visitedBoards.update({current_state:{
                 "whiteMoves": encoded_moves
             }})
     else:
         if visited:
+            nextMoves=black_moves(current_board)
             if not visited.get("blackMoves"):
-                encoded_moves=[encode_board(item[1])[0] for item in black_moves(current_board)]
+                encoded_moves=[encode_board(item[1])[0] for item in nextMoves]
                 visitedBoards.update({current_state : {
                     "blackMoves": encoded_moves
                 }})
             else:
                 raise NotImplemented
         else:
-            encoded_moves=[encode_board(item[1])[0] for item in black_moves(current_board)]
+            encoded_moves=[encode_board(item[1])[0] for item in nextMoves]
             visitedBoards.update({current_state:{
                 "blackMoves": encoded_moves
             }})
+    
     whiteTurn=not whiteTurn
+    
         
 
 

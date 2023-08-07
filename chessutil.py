@@ -22,7 +22,7 @@ class State():
     def addWhiteState(self,nextWhiteState,nextStateValue):
         self.nextWhiteState.append((nextWhiteState,nextStateValue))
 
-
+'''
 
 class QueueFrontier():
     def __init__(self):
@@ -42,5 +42,5 @@ class QueueFrontier():
             self.frontier=self.frontier[1:]
             return retVal
         
-'''
+
         
